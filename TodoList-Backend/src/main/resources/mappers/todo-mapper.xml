@@ -21,6 +21,7 @@
 	<select id="todoListSelect" resultType="Todo">
 		SELECT * FROM TODO
 		WHERE TODO_MEMBER_NO = #{todoMemberNo}
+		ORDER BY 1
 	</select>
 	
 	<!-- DB에 있는 TODO 테이블에서 해당 번호 할 일이 완료 됐는지 isDone으로 완료 여부 수정 -->
