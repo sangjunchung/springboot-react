@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -72,8 +73,13 @@ public class PaymentController {
 		
 		HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
 		
-		ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
-		return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+		try {
+			ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+			return new ResponseEntity<>(response.getBody(), response.getStatusCode());			
+		} catch (Exception e) {
+			// 사용자한테 보내는 응답 실패메세지, 잘못된 요청으로 안됐다는 상태코드 보낸것
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);			
+		}
 	}
 }
 	
