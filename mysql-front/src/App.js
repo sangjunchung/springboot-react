@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     showAllUser(); // 홈페이지 들어오면 최초 1회로 유저들이 보이고,
-  },[]); // [] 비어있기 때문에 홈페이지가 보일 때 딱 한 번만 실행 
+  },[users]); // [] 비어있기 때문에 홈페이지가 보일 때 딱 한 번만 실행 
 
   /* const showAllUser = () => {
     // axios를 이용해서 모든 유저를 보겠다.
@@ -46,24 +46,64 @@ function App() {
     setUsers(response.data); 
   }*/
   
+  /** 모든 유저 조회 기능 **/
   // async await 버전 사용
   const showAllUser = async () => {
     const response = await axios.get("/users");
     setUsers(response.data);
   }
-
+  
+  /** 유저 추가 버튼 **/
   // async await 사용해서 유저 추가하기 addUser에서 가져온 user 한 명을 넣어주기
   const addUser = async (user) => {
-    const res = await axios.post('/users', user); // controller postMapping으로 전달하는 유저 정보
+    let check = true;
+    const res = await axios.post('/users', user)
+    .catch(e => {
+      alert("이메일 중복");
+      check = false;
+    }); // controller postMapping으로 전달하는 유저 정보
     // ...users 기존에 작성한 유저목록에 유저 데이터 하나를 추가
-    setUsers([...users], res.data);
+    if(check) setUsers([...users], res.data);
+  }
+
+  /** 유저 삭제 버튼 **/
+  
+  const deleteUser2 = async (id) => {
+    /*
+    "" '' = 모두 글자 취급
+    `` = 글자 안에 특정 값을 변수명으로 취급해야할 때
+         `` 안에서 변수명을 처리해야하는 값은 ${} 사용한 다음
+         ${변수명} 작성
+    */
+    await axios.delete(`/users?id=${id}`);
+    /*
+      자바 컨트롤러에서 @DeleteMapping("/{id}") 
+      매개변수 = 파라미터에 (@PathVariable int id)
+      리액트 axios에서 id=${id} 이다.
+      await axios.delete(`/users?id=${id}`);
+      나중에 주소값에 id 대신 삭제할 번호가 들어갈 수 있도록 설정
+      
+      자바 컨트롤러에서 @DeleteMapping() 에 특정 id 값을 설정하지 않을 경우
+      매개변수 = 파라미터에 (@RequestParam int id)
+      params : {id}
+      await axios.delete('/users', {params:{id}});
+    */
+    setUsers(users.filter(user => user.id !== id));
+    /*
+    users = 현재 저장되어 있는 유저들 리스트
+    user.id !== id => user.id 유저 아이디와 id(입력받은 삭제를 원하는 유저 아이디)가
+      일치하지 않으면 setUsers(새로운 유저목록)에 포함시킴
+
+    filter = 조건대로 배열을 재생성
+    */
+    setUsers(users.filter(user => user.id !== id));
   }
 
   return (
     <div className="App">
       <h1>유저 관리하기</h1>
       <UserForm addUser={addUser} />
-      <UserTable users={users} />
+      <UserTable users={users} deleteUser2={deleteUser2} />
     </div>
   );
 }

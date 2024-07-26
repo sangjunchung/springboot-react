@@ -16,4 +16,9 @@
 		insert into user(name, email)
 		values(#{name}, #{email})
 	</insert>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from user
+		where id = #{id}
+	</delete>
 </mapper>        

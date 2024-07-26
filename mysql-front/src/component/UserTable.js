@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 /*
 const 컴포넌트명 = () = > {}
@@ -10,7 +11,26 @@ const 컴포넌트명 = ({특정값}) = > {}
 */
 // UserTable 컴포넌트는 사이트에 회원가입한 유저들의 정보를 보는 공간
 // App.js 전달받은 User 값들을 받아와 유저 정보를 보여줄 것
-const UserTable = ({users}) => {
+const deleteUser = (id) => {
+    axios.delete('/users/delete', {data:{id:id}})
+    .then(result => {
+        if(result.data === ''){
+            alert("삭제 성공");
+        } else {
+            alert("삭제 실패");
+        }
+    })
+    .catch(error => {
+        if (error.response) {
+            console.log('Error status code:', error.response.status);
+            console.log('Error response data:', error.response.data);
+        } else {
+            console.log('Error message:', error.message);
+        }
+    })
+}
+
+const UserTable = ({users, deleteUser2}) => {
     return(
         <table>
             <thead>
@@ -18,7 +38,7 @@ const UserTable = ({users}) => {
                     <th>ID</th>
                     <th>NAME</th>
                     <th>Email</th>
-                    <th>Actions</th>
+                    <th colSpan={2}>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +48,10 @@ const UserTable = ({users}) => {
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>
-                            <button>유저 삭제하기</button>
+                            <button type='button' onClick={e => deleteUser(user.id)}>유저 삭제하기</button>
+                        </td>
+                        <td> 
+                            <button type='button' onClick={e => deleteUser2(user.id)}>유저 삭제하기2</button>
                         </td>
                     </tr>
                 ))}
