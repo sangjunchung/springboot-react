@@ -28,9 +28,9 @@ const deleteUser = (id) => {
             console.log('Error message:', error.message);
         }
     })
-}
+}   
 
-const UserTable = ({users, deleteUser2}) => {
+const UserTable = ({users, deleteUser2, editUser}) => {
     return(
         <table>
             <thead>
@@ -38,7 +38,7 @@ const UserTable = ({users, deleteUser2}) => {
                     <th>ID</th>
                     <th>NAME</th>
                     <th>Email</th>
-                    <th colSpan={2}>Actions</th>
+                    <th colSpan={3}>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +52,9 @@ const UserTable = ({users, deleteUser2}) => {
                         </td>
                         <td> 
                             <button type='button' onClick={e => deleteUser2(user.id)}>유저 삭제하기2</button>
+                        </td>
+                        <td> 
+                            <button type='button' onClick={e => {}}>정보 수정하기</button>
                         </td>
                     </tr>
                 ))}
