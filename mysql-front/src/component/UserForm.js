@@ -28,6 +28,8 @@ const UserForm = ({addUser}) => {
                     required />
                 </div>
                 <button>유저 추가하기</button>
+                <br/><br />
+                <button>네이버 로그인</button>
             </form>
         </div>
     )
