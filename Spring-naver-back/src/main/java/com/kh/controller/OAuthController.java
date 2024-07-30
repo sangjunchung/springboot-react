@@ -15,7 +15,7 @@ public class OAuthController {
 			 키이름을 가져오고 키에 담긴 값을 가져오는 어노테이션
 	*/
 	// application.properties naver.client_id=y0jagE9dTUSHBmJzbfyV
-	@Value("${naver.client_id") // naver.client_id=y0jagE9dTUSHBmJzbfyV를 가져옴
+	@Value("${naver.client_id}") // naver.client_id=y0jagE9dTUSHBmJzbfyV를 가져옴
 	private String clientId; // clientId 에 y0jagE9dTUSHBmJzbfyV 를 대입
 	
 	@Value("${naver.client_secret}")
@@ -25,7 +25,7 @@ public class OAuthController {
 	private String redirectURI;
 	
 	@Value("${naver.state}")
-	private String naverState;
+	private String state;
 	
 	/*
 	app.get('/naverLogin', function (req, res) {
@@ -34,11 +34,11 @@ public class OAuthController {
    		res.end("<a href='"+ api_url + "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>");
  	});
 	*/
-	@GetMapping("/naverLogin")
-	public String naverLogin() {
-		String api_url = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectURI + "&state=" + naverState;
-		
-		return "<a href='"+ api_url + "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
+	@GetMapping("/naverLogin") //localhost:9010/api/naverLogin
+	   public String naverLogin() {
+		   String api_url = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectURI + "&state=" + state;
+		   
+	       return "<a href='"+ api_url + "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
 	}
 	/*
 	url 에 {}=변수명 표시가 없으면 @RequestParam 이나 @RequestBody
