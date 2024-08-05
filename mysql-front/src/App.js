@@ -93,8 +93,8 @@ function App() {
       params : {id}
       await axios.delete('/users', {params:{id}});
     */
-    setUsers(users.filter(user => user.id !== id));
-    /*
+   /*
+   setUsers(users.filter(user => user.id !== id));
     users = 현재 저장되어 있는 유저들 리스트
     user.id !== id => user.id 유저 아이디와 id(입력받은 삭제를 원하는 유저 아이디)가
       일치하지 않으면 setUsers(새로운 유저목록)에 포함시킴
