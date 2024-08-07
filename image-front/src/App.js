@@ -31,11 +31,20 @@ function App() {
     setFiles([]);
     bringJava();
   };
-
+  /*
   const bringJava = () => {
     axios.get("/posts")
     .then(res => {
         setPosts(res.data.result);
+        console.log(res.data.result);
+    })
+  }*/
+
+  const bringJava = () => {
+    axios.get("/posts")
+    .then(response => {
+        setPosts(response.data);
+        console.log(response.data);
     })
   }
 
@@ -45,38 +54,31 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <label>제목:</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>내용:</label>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="upFile">이미지선택</label>
-        <input
-          id="upFile"
-          type="file"
-          className="uploadFile"
-          accept="image/*"
-          multiple
-          onChange={(e) => setFiles(e.target.files)}
-        />
-      </div>
-      <button onClick={submitJava}>Submit</button>
-
-      <div>
-        <div>
+      <div className="form-container">
+        <table>
+          <tbody>
+            <tr>
+              <td><label>제목</label></td>
+              <td><input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /></td>
+            </tr>
+            <tr>
+              <td><label>내용</label></td>
+              <td><textarea value={content} onChange={(e) => setContent(e.target.value)} /></td>
+            </tr>
+            <tr>
+              <td>
+                <label htmlFor="upFile" className="file-label">이미지선택
+                <input id="upFile" type="file" className="uploadFile" accept="image/*"
+                multiple onChange={(e) => setFiles(e.target.files)} /></label>
+              </td>
+              <td><button onClick={submitJava}>Upload</button></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div className="posts-container">
           {posts.map((post) => (
-            <div key={post.id}>
+            <div key={post.id} className="post">
               <h2> {post.title}</h2>
               <p> {post.content}</p>
               {/*
@@ -91,17 +93,16 @@ function App() {
               {/* DataBase에 이미지 여러장 저장을 , 를 기준으로 설정해서 여러장을 저장했기 때문에
                   , 기준으로 이미지를 가져와야함
               */}
-              {post.imageUrl.split(",").length > 1 ? (
-                post.imageUrl.split(",").map((image, index) => (
-                    <img key={index} src={`http://localhost:9007/saveImage/${image}`} />
-                ))
-              ) : (
-                <img src={`http://localhost:9007/saveImage/${post.imageUrl}`} />
-              )}
+              <div className="images"> 
+                {post.imageUrl.split(",").map((image) => (
+                      <img key={image} src={`http://localhost:9007/images/${image}`} />
+                ))}
+              </div>
+              <p>{post.createdAt}</p>
+              <button>이미지 수정하기</button>
             </div>
           ))}
         </div>
-      </div>
     </div>
   );
 }

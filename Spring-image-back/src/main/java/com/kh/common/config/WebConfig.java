@@ -1,5 +1,6 @@
 package com.kh.common.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -8,13 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // 온전히 제대로 연결해줄 수 있도록 설정
 // WebSocket 프론트와 백엔드가 서로 상호작용을 주기적으로 진행할 때
 // 좀 더 안전하게 연결을 계속 진행하겠다. 설정
+@Configuration
 public class WebConfig implements WebMvcConfigurer{
 	
 	// 이미지폴더 경로를 react 가 가져갈 수 있도록 허용
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry r) {
-		r.addResourceHandler("/image/**")
-		 .addResourceLocations("C:/Users/user1/Desktop/saveImage/"); // 바탕화면에 지정한 이미지 경로
+		// http://localhost:9007/images/ 모든 경로 허용
+		r.addResourceHandler("/images/**")
+		 .addResourceLocations("file:C:/Users/user1/Desktop/saveImage/"); // 바탕화면에 지정한 이미지 경로
 	}
 	
 	@Override

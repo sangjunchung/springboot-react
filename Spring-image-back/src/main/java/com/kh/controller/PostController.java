@@ -1,6 +1,7 @@
 package com.kh.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.dto.Post;
 import com.kh.service.PostService;
 
 @RestController
@@ -30,10 +32,18 @@ public class PostController {
 		return ResponseEntity.ok("이미지 DB 업로드 성공");
 	}
 	
+	/*
 	@GetMapping("/posts") // DB에 저장된 게시글 내용 이미지 가져오기
 	public Map<String, Object> findAll(){ // <> 객체를 구분하는 구분
 		Map<String, Object> map = new HashMap<>();
 		map.put("result", postService.findAll());
 		return map;
+	}*/
+	// List 와 Map 사용한 차이점 정리
+	
+	@GetMapping("/posts") // DB에 저장된 게시글 내용 이미지 가져오기
+	public ResponseEntity<List<Post>> findAll(){ // <> 객체를 구분하는 구분
+		List<Post> getFindAll = postService.findAll();
+		return ResponseEntity.ok(getFindAll);
 	}
 }
