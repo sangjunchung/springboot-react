@@ -55,7 +55,7 @@ public class DBConfig {
 		sfb.setTypeAliasesPackage("com.kh.dto"); // 본인의 model 이 작성되어 있는 패키지 폴더 위치 설정
 		// db 와 java 컬럼명과 변수명이 일치하지 않을 때 서로 어떻게 바라보게 하는지
 		// db member_id dot memberId
-		sfb.setConfigLocation(applicationContext.getResource("classpath:mybatis-config"));
+		sfb.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
 		return sfb.getObject();
 	}
 	

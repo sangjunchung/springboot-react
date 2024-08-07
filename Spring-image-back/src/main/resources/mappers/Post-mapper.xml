@@ -5,20 +5,13 @@
         
 <mapper namespace="com.kh.mapper.PostMapper">
 <!-- select 전체 게시글 보기 SQL -->
-	<select id="findAll">
-		select p.id, p.title, p.content, i.image_url
-		from posts p
-		left join images i on p.id = i.post_id
+	<select id="findAll" resultType="com.kh.dto.Post">
+		select * from posts
 	</select>
 	
 	<insert id="insertPost" parameterType="com.kh.dto.Post">
 		<!-- posts 게시글 테이블에 title(제목), content(내용) 작성 -->
-		insert into posts (title, content)
-		values (#{title}, #{content})
-	</insert>
-	
-	<insert id="insertImage" parameterType="com.kh.dto.Image">
-		insert into images (post_id, image_url)
-		values (#{postId}, #{imageUrl})
+		insert into posts (title, content, image_url)
+		values (#{title}, #{content}, #{imageUrl})
 	</insert>
 </mapper>
