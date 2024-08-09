@@ -11,4 +11,5 @@ public interface PostService {
 	void insertPost(Post post);
 	// 이미지 업로드를 도와주는 기능 목록 설정
 	void uploadImages(MultipartFile[] files, String title, String content);
+	void updatePost(Post post);
 }

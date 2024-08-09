@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import '../css/Profile.css';
 import axios from 'axios';
 
@@ -6,6 +6,11 @@ const Profile = () => {
     const [files, setFiles] = useState([]);
     const [username, setUsername] = useState("");
     const [profile, setProfile] = useState([]);
+    const fileRef = useRef(null);
+    const [userId, setUserId] = useState(null);
+
+    const watchAPI = "http://localhost:9007/profile/watching";
+    const uploadAPI = "http://localhost:9007/profile/upload";
 
     const fileChangeFunc = (e) => {
         // 파일을 변경했을 때 프로필 썸네일에 이미지들 주소가 넘어갈 수 있도록 설정
@@ -23,7 +28,7 @@ const Profile = () => {
 
         formData.append("username", username);
 
-        fetch("/profile/upload", {
+        fetch(uploadAPI, {
             method: "POST", // DB에 값을 저장하기 위해 Post 사용
             //headers: { 'Content-Type' : "multipart/form-data" }, // 데이터에 파일(이미지)이 포함됨을 자바에 알려줌
             body: formData
@@ -35,6 +40,7 @@ const Profile = () => {
             pageRefresh();
         });
 
+        fileRef.current.value='';
         setFiles([]);
         setUsername('');
     }
@@ -48,9 +54,7 @@ const Profile = () => {
 
         formData.append("username", username);
 
-        await axios.post("/profile/upload", formData, {
-            headers: { 'Content-Type' : "multipart/form-data" }, // 데이터에 파일(이미지)이 포함됨을 자바에 알려줌
-        })
+        await axios.post(uploadAPI, formData)
         .then(response => {
             const data = response.data;
             pageRefresh();
@@ -66,9 +70,9 @@ const Profile = () => {
 
         formData.append("username", username);
 
-        axios.post("/profile/upload", formData, {
-            headers: { 'Content-Type' : "multipart/form-data" }, // 데이터에 파일(이미지)이 포함됨을 자바에 알려줌
-        })
+        // 삼항 연사자를 이용하여 수정기능을 위한 url과 새 프로필을 저장할 url 설정
+
+        axios.post(uploadAPI, formData)
         .then(response => {
             const data = response.data;
             pageRefresh();
@@ -77,7 +81,7 @@ const Profile = () => {
     
     // 페이지 새로고침해서 0.00001초 전에 업로드한 파일 사용자 눈에 보여주기
     const pageRefresh = async () => {
-        await axios.get("http://localhost:9007/profile/watching")
+        await axios.get(watchAPI)
         .then(response => {
             setProfile(response.data);
         });
@@ -86,6 +90,11 @@ const Profile = () => {
     useEffect(() => {
         pageRefresh();
     }, [profile]);
+
+    const editFunc = (p) => {
+        setUserId(p.userId); // 수정할 사용자 ID 설정
+        setUsername(p.username);
+    }
 
     return (
         <div>
@@ -97,7 +106,7 @@ const Profile = () => {
                 ))}    
             </div>
             <h1>프로필 이미지 업로드</h1>
-            <input type="file" multiple onChange={e => fileChangeFunc(e)} />
+            <input type="file" onChange={e => fileChangeFunc(e)} ref={fileRef}/>
             <input type="text" placeholder="닉네임을 입력하세요." value={username}
                 onChange={e => setUsername(e.target.value)} />
             <button onClick={imageUpload1}>프로필 저장</button>
@@ -111,6 +120,7 @@ const Profile = () => {
                         {p.profileImageUrl && p.profileImageUrl.split(",").map(image => (
                             <img key={image} src={`http://localhost:9007/images/${image}`} />
                         ))}
+                        <button>프로필 수정하기</button>
                     </div>
                 ))}
             </div>

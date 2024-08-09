@@ -12,4 +12,5 @@
 		insert into user_profiles (username, profile_image_url)
 		values (#{username}, #{profileImageUrl})
 	</insert>
+	
 </mapper>

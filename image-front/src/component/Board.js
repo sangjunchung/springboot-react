@@ -8,6 +8,9 @@ const Board = () => {
   const [files, setFiles] = useState([]);
   const [posts, setPosts] = useState([]);
 
+  const postAPI = "http://localhost:9007/posts";
+  const galleryAPI = "http://localhost:9007/gallery/upload";
+
   const submitJava = () => {
     // Form 특정 값을 가져와서 넘겨줄 때 사용하는 객체
     // files에서 파일이 하나가 아니라 여러개이기 때문에 여러개를 담을 배열 설정
@@ -19,7 +22,7 @@ const Board = () => {
     formData.append("content", content);
 
     // 자바 컨트롤러에 데이터 전송! Post
-    axios.post("/gallery/upload", formData, {
+    axios.post(galleryAPI, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -41,7 +44,7 @@ const Board = () => {
   }*/
 
   const bringJava = () => {
-    axios.get("/posts")
+    axios.get(postAPI)
     .then(response => {
         setPosts(response.data);
     })
