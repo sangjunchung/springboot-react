@@ -44,7 +44,6 @@ const Board = () => {
     axios.get("/posts")
     .then(response => {
         setPosts(response.data);
-        console.log(response.data);
     })
   }
 
