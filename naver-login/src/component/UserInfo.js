@@ -11,9 +11,7 @@ function UserInfo() {
     const location = useLocation();
     const [loading, setLoading] = useState(true);
     // 어떤 클릭이 없어도 UserInfo 페이지 들어오면 자동으로 실행되는 효과
-
-    const [userId, setUserId] = useState('');
-    const [userPw, setUserPw] = useState('');
+    const [userPw, setUserPw] = useState(null);
 
     useEffect(() => {
         // URLSearchParams : URL ? 뒤에 붙는 키-벨류 값을 가져옴
@@ -44,22 +42,31 @@ function UserInfo() {
     }, [location.search]); // location.search 로 검색된 키-값 중 access_token = abc123
     // access_token 값을 가져오면 useEffect를 사용하겠다.
 
-    const signUpUser = () => {
+    const handleSignUpUser = () => {
+        if(!userPw) {
+            alert("비밀번호를 입력해주세요.");
+            return;
+        }
 
         const signUpUserData = {
-            id : userId,
+            id : userInfo.response.id,
             email : userInfo.response.email,
             name : userInfo.response.name,
+            nickname : userInfo.response.nickname,
             password : userPw,
             profileImage : userInfo.response.profile_image
         };
 
-        axios.post('/signUpUser', signUpUserData)
+        axios.post('/naverAPI/register', signUpUserData)
+        .then(response => {
+            console.log(response.data);
+            alert("회원가입이 완료되었습니다.");
+        })
         .catch(err => {
-            alert("중복된 회원");
+            console.error("개발자가 에러 확인하는 공간 : ", err);
+            alert("회원가입에 실패하였습니다.");
         });
 
-        setUserId("");
         setUserPw('');
     }
 
@@ -74,26 +81,22 @@ function UserInfo() {
             <div>
                 <input type="text" value={userInfo.response.id} disabled />
                 <input type="email" value={userInfo.response.email} disabled />
+                <input type="email" value={userInfo.response.nickname} disabled />
                 <input type="text" value={userInfo.response.name} disabled />
                 <input type="text" value={userInfo.response.gender==='M' ? ('남자'):('여자')} disabled />
-                <img src={userInfo.response.profile_image} disabled />
+                <img src={userInfo.response.profile_image} disabled alt="프로필 이미지" />
                 {/* 네이버에서 가져온 id 값을 input에 넣어주고 수정하지 못하게 막음처리 */}
             </div>
         ) : (<p>유저를 찾을 수 없습니다.</p>)}
 
         <div>
             <h2>회원가입에 필요한 아이디 및 비밀번호 작성하기</h2>
-            <label>ID 
-                <input type="text" value={userId}
-                    onChange={e => setUserId(e.target.value)}
-                />
-            </label>
             <label>PW 
                 <input type="password" value={userPw}
                     onChange={e => setUserPw(e.target.value)}
                 />
             </label>
-            <button onClick={signUpUser}>회원 가입</button>
+            <button onClick={handleSignUpUser}>회원 가입</button>
         </div>
         </>
     )
