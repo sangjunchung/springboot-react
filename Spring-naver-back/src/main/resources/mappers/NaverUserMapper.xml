@@ -3,9 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
-<mapper namespace="com.kh.mapper.UserMapper">
-	<insert id="signUpUser" parameterType="User">
-		insert into naverusers (id, email, name, password, profile_image)
-		values (#{id}, #{email}, #{name}, #{password}, #{profileImage})
+<mapper namespace="com.kh.mapper.NaverUserMapper">
+	<insert id="insertNaverUser" parameterType="NaverUser">
+	<!-- NaverUser Table에 네이버에서 가져온 값과 추가할 값을 작성해서 저장 -->
+		insert into naver_user (id, email, nickname, name, gender, profile_image, password)
+		values (#{id}, #{email}, #{nickname}, #{name}, #{gender}, #{profileImage}, #{password})
 	</insert>
 </mapper>      

@@ -18,17 +18,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kh.dto.User;
-import com.kh.service.UserService;
+import com.kh.dto.NaverUser;
+import com.kh.service.NaverUserService;
 /*
 24-07-31 리액트와 스프링 프레임워크 연동을 위한 컨트롤러
 리액트와 네이버 로그인과 최종 연동된 컨트롤러
 */
 @RestController
-public class NaverRegistController {
+public class NaverAPIController {
 	
 	@Autowired
-	private UserService userService;
+	private NaverUserService userService;
 	
 	@Value("${naver.client_id}")
 	private String clientId;
@@ -115,8 +115,8 @@ public class NaverRegistController {
 	}
 	
 	@PostMapping("/signUpUser")
-	public void signUpUser(@RequestBody User user) {
+	public void signUpUser(@RequestBody NaverUser user) {
 		System.out.println(user);
-		userService.signUpUser(user);
+		userService.insertNaverUser(user);
 	}
 }
