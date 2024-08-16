@@ -1,17 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from 'axios';
 import { useLocation } from "react-router-dom"; // 버튼 클릭 없이 위치 설정
+import AuthContext from "./layout/AuthContext";
 /*
  useLocation : URL 의 정보를 포함한 객체
                경로, 해시, 문자열값 등을 가지고 온 객체
 */
 
-function UserInfo() {
+function NaverSignup() {
     const [userInfo, setUserInfo] = useState(null);
     const location = useLocation();
     const [loading, setLoading] = useState(true);
     // 어떤 클릭이 없어도 UserInfo 페이지 들어오면 자동으로 실행되는 효과
     const [userPw, setUserPw] = useState(null);
+
+    const {loginMember} = useContext(AuthContext);
 
     useEffect(() => {
         // URLSearchParams : URL ? 뒤에 붙는 키-벨류 값을 가져옴
@@ -28,7 +31,7 @@ function UserInfo() {
 
         // 만약에 accessToken 값이 존재하면 axios 발동
         if(accessToken){
-            axios.get(`/userInfo?access_token=${accessToken}`)
+            axios.get(`/signup/naver?access_token=${accessToken}`)
             // .then((res) => {}) res 를 () 로 막아버리면 => 이후로는 res 는 선언되지 않은 
             // 지역변수명이 되기 때문에 res를 찾을수 없게됨
             .then(res => {
@@ -102,4 +105,4 @@ function UserInfo() {
     )
 }
 
-export default UserInfo;
+export default NaverSignup;
