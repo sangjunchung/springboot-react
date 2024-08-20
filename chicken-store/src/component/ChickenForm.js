@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import '../css/ChickenForm.css';
 
 const ChickenForm = () => {
     const [name, setName] = useState('');

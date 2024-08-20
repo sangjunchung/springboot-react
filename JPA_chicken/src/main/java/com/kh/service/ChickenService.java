@@ -24,4 +24,8 @@ public class ChickenService {
 	public Chicken createChicken(Chicken chicken) {
 		return chickenRepository.save(chicken); // 치킨에 대해서 DTO 에 작성된 컬럼들에 모두 삽입
 	}
+	
+	public void deleteChicken(int id) {
+		chickenRepository.deleteById(id);
+	}
 }
