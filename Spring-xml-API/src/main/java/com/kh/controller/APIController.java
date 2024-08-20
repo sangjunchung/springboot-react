@@ -16,6 +16,9 @@ public class APIController {
 	
 	@GetMapping("/air-pollution")
 	public String getAirData() throws Exception {
-		return apiService.getAirDate();
+		String airData = apiService.getAirDate();
+		System.out.println(airData);
+		
+		return airData;
 	}
 }

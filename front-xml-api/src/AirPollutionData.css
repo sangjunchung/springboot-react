@@ -3,6 +3,7 @@
     margin-bottom: 20px;
 }
 
+/*
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -10,6 +11,16 @@
     gap: 20px;
     padding: 20px;
     background-color:  #f9f9f9;
+}*/
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background-color:  #f9f9f9;
+    width: 100%;
+    border-radius: 8px;
 }
 
 .card {
@@ -18,4 +29,11 @@
     border-radius: 8px;
     padding: 20px;
     background-color: #fff;
+    max-width: 250px;
+}
+
+.stationName {
+    color: #007bff;
+    font-size: 20px;
+    margin-bottom: 15px;
 }
