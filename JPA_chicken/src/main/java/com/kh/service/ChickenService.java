@@ -28,4 +28,9 @@ public class ChickenService {
 	public void deleteChicken(int id) {
 		chickenRepository.deleteById(id);
 	}
+	
+	public Chicken findById(Integer id) {
+		return chickenRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("일치하는 정보를 찾을 수 없습니다."));
+	}
 }

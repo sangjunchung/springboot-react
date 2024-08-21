@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../css/ChickenList.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const ChickenList = () => {
   const [chickens, setChickens] = useState([]);
+  const navigator = useNavigate();
 
   useEffect(() => {
     axios
@@ -32,7 +34,12 @@ const ChickenList = () => {
                   <div className="chicken-name">{menu.chickenName}</div>
                   <div className="chicken-description">{menu.description}</div>
                   <div className="chicken-price">￦{menu.price}</div>
-                  <button className="detail-button">상세보기</button>
+                  <button className="detail-button" onClick={() => navigator(`/chicken-detail/${menu.id}`)}>상세보기</button>
+                  
+                  {/* navigate와 Link 사용에 있어 태그를 사용하느냐, 기능을 사용하느냐 차이 사용법만 다를 뿐 큰 차이는 없음
+                  <button className="detail-button" onClick={() => navigator(`/chicken-detail/${menu.id}`)}>상세보기</button>
+                  <button className="detail-button"><Link to={`/chicken-detail/${menu.id}`}>상세보기</Link></button>
+                  */}
                 <button onClick={(e) => delMenu(menu.id)}>삭제하기</button>
               </li>
             ))}

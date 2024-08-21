@@ -13,4 +13,9 @@ public interface ChickenRepository extends JpaRepository<Chicken, Integer> {
 	// JpaRepository 안에 모두 들어있음
 	
 	// select * from chicken
+	
+	// 특정 값을 찾을 때 쓰는 기능
+	// findById(Integer id); -> where 대신 find
+	// 만약에 where 이메일 = '' 비밀번호 = '' 로그인을 한다
+	// 레포지토리에 findby
 }
