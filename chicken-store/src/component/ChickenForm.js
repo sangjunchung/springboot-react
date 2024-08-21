@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import '../css/ChickenForm.css';
 
@@ -44,7 +44,6 @@ const ChickenForm = () => {
                 />
             </label>
             <button onClick={submitBtn}>등록하기</button>
-            <button>메인으로</button>
         </div>
     )
 }
