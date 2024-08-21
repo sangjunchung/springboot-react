@@ -1,0 +1,29 @@
+.chicken-detail-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.chicken-detail-container:hover {
+    transform: translateY(80px)
+    /*
+    translateY = 세로로 움직임(- 위로, + 아래로)
+    */
+}
+
+.chicken-detail-container h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.chicken-detail-container p {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.5;
+    margin: 10px 0;
+}

@@ -27,7 +27,7 @@ const ChickenDetail = () => {
         <div className="chicken-detail-container">
             <h1>{chicken.chickenName}</h1>
             <p>{chicken.description}</p>
-            <p>{chicken.price}</p>
+            <p>{chicken.price}원</p>
         </div>
     )
 }
