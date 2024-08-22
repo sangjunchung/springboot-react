@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../css/ChickenList.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ChickenList = () => {
   const [chickens, setChickens] = useState([]);
@@ -13,13 +13,6 @@ const ChickenList = () => {
       .then((Response) => setChickens(Response.data))
       .catch((err) => alert("불러오는데 문제 발생했습니다."));
   }, [chickens]);
-
-  const delMenu = (id) => {
-    axios
-      .delete("http://localhost:9090/api/chicken?id=" + id)
-      .then((response) => alert("해당 메뉴를 삭제하였습니다."))
-      .catch((err) => alert("해당 메뉴 삭제 중 에러가 발생하였습니다."));
-  };
 
   return (
     <div className="chicken-container">
@@ -40,7 +33,6 @@ const ChickenList = () => {
                   <button className="detail-button" onClick={() => navigator(`/chicken-detail/${menu.id}`)}>상세보기</button>
                   <button className="detail-button"><Link to={`/chicken-detail/${menu.id}`}>상세보기</Link></button>
                   */}
-                <button onClick={(e) => delMenu(menu.id)}>삭제하기</button>
               </li>
             ))}
           </div>

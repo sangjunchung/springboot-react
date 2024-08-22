@@ -33,4 +33,18 @@ public class ChickenService {
 		return chickenRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("일치하는 정보를 찾을 수 없습니다."));
 	}
+	
+	// findById 를 작성해줄 때는 아이디를 찾지 못할 예외사항을 필수로 작성해줘야함
+	// .orElseThrow() 예외사항 작성
+	
+	public Chicken updateChicken(Integer id, Chicken uc) {
+		Chicken chicken = chickenRepository.findById(id)
+						  .orElseThrow(() -> new RuntimeException("치킨을 찾을 수 없습니다."));
+		
+		chicken.setChickenName(uc.getChickenName());
+		chicken.setDescription(uc.getDescription());
+		chicken.setPrice(uc.getPrice());
+		
+		return chickenRepository.save(chicken);
+	}
 }

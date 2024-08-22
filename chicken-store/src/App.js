@@ -1,13 +1,13 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import ChickenList from './component/ChickenList';
 import ChickenDetail from './component/ChickenDetail';
+import MainRouter from './MainRouter';
 
 function App () {
 
     return (
         <Router>
             <Routes>
-                <Route path='/' element={<ChickenList />} />
+                <Route path='/' element={<MainRouter />} />
                 <Route path='/chicken-detail/:id' element={<ChickenDetail />} />
             </Routes>
         </Router>
