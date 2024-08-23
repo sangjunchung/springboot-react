@@ -47,4 +47,8 @@ public class ChickenService {
 		
 		return chickenRepository.save(chicken);
 	}
+	
+	public List<Chicken> searchChickens(String query) {
+		return chickenRepository.findByChickenNameContainingIgnoreCase(query);
+	}
 }

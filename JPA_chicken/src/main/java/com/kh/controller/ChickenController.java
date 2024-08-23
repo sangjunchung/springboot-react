@@ -47,4 +47,9 @@ public class ChickenController {
 	public Chicken updateChicken(@PathVariable("id") Integer id, @RequestBody Chicken uc) {
 		return chickenService.updateChicken(id, uc);
 	}
+	
+	@GetMapping("/search")
+	public List<Chicken> searchChicken(@RequestParam("query") String query) {
+		return chickenService.searchChickens(query);
+	}
 }
